@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 const Signup=()=>{
     const [formState,setFormState]=useState({
@@ -19,6 +20,7 @@ const Signup=()=>{
         }
         setFormState({...formState,[name]:event.target.value});
     }
+
     const clickSubmit=async (e)=>{
         e.preventDefault();
         const user={
@@ -60,7 +62,9 @@ const Signup=()=>{
             <h2 className="mt-5 mb-5">Signup</h2>
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
             {
-                successMessage && <div className="alert alert-primary">{successMessage}</div>
+                successMessage && <div className="alert alert-primary">{successMessage}
+                    Kindly <Link to={`/signin`}>Sign In!</Link>
+                </div>
             }
             <form>
                 <div className="form-group">

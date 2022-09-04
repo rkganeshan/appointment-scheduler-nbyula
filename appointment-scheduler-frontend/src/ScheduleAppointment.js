@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+
 const ScheduleAppointment=()=>{
     const [allUsers,setAllUsers]=useState([]);
     const [user,setUser]=useState("");
@@ -26,17 +27,60 @@ const ScheduleAppointment=()=>{
     const clickSubmit=async (e)=>{
         e.preventDefault();
         // moment(moment(formState.offDate).format("DD-MM-YYYY"),"DD-MM-YYYY",true).isValid()==false
-        let tarr=formState.offDate.trim().split("-");
-        let d=new Date(parseInt(tarr[2]),parseInt(tarr[1])-1,parseInt(tarr[0]),parseInt(offHr.trim().charAt(0)),0,0,0)
-        if(!d){
-            alert("Wrong Date Format!");
+        // let tarr=formState.offDate.trim().split("-");
+        setSuccessMessage("");
+        setErrorMessage("");
+        if(!formState.title || !formState.agenda || !formState.offDate || !offHr)
+        {
+            alert("All fields are mandatory to schedule an appointment.");
             return;
         }
-        
+        let momentDate="";
+        let dateStr="";
+        let dateArr=formState.offDate?.split("-");
+        if(dateArr[0]?.length!=2)
+        {
+            dateArr[0]="0"+dateArr[0];
+        }
+        if(dateArr[1]?.length!=2)
+        {
+            dateArr[1]="0"+dateArr[1];
+        }
+        dateStr=dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0];
+        momentDate=moment(dateStr);
+        console.log("momentDate:",momentDate);
+        if(!momentDate.isValid())
+        {
+            alert("Invalid Date!");
+            return;
+        }
+        // let d=new Date(parseInt(tarr[2]),parseInt(tarr[1])-1,parseInt(tarr[0]),parseInt(offHr.trim().charAt(0)),0,0,0)
+        // if(!d){
+        //     alert("Wrong Date Format!");
+        //     return;
+        // }
+        let strH="";
+        let h=parseInt(offHr.split("-")[0]);
+        if(h<10)
+        {
+            strH="0"+h;
+        }
+        else
+        {
+        strH=strH+h;
+        }
+        //30-09-2022
+        // "2022-09-30"
+        // let finalTime=momentDate._i.split("-").reverse().join("-")+"T"+strH+":00:00.000Z";
+        let finalTime=momentDate._i+"T"+strH+":00:00.000Z";
+        console.log("73 final time::",finalTime);
+        finalTime=moment(finalTime);
+        console.log("75 final time::",finalTime);
         const appointment={
             title:formState.title,
             agenda:formState.agenda,
-            time:new Date(parseInt(tarr[2]),parseInt(tarr[1])-1,parseInt(tarr[0]),parseInt(offHr.charAt(0)),0,0),
+            // time:new Date(parseInt(tarr[2]),parseInt(tarr[1])-1,parseInt(tarr[0]),parseInt(offHr.charAt(0)),0,0),
+            time:finalTime,
             // offDate:formState.offDate,
             // offSlot:offHr
         };

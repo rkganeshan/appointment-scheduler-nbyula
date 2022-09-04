@@ -35,7 +35,7 @@ exports.signin=async(req,res)=>{
         return res.status(401).json({message:"Authentication unsuccessful!"})
     }
     //generate token with user id and .env secret
-    const token=jwt.sign({_id:userExists._id},process.env.SECRET,{expiresIn:"600000"});
+    const token=jwt.sign({_id:userExists._id},process.env.SECRET,{expiresIn:"3600000"});
     // let d=moment.u
     console.log("token:",token);
     // console.log("dec:",jwt.decode(token).exp);

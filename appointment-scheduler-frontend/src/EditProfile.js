@@ -3,6 +3,8 @@ import { Redirect, useParams,Link } from "react-router-dom";
 import axios from "axios";
 import "./EditProfile.css";
 import moment from "moment";
+
+
 const EditProfile=()=>{
     let { userId } = useParams();
     const [profileState,setProfileState]=useState({});
@@ -59,15 +61,57 @@ const EditProfile=()=>{
     //     }
     const clickSubmit=async (e)=>{
         e.preventDefault();
-        if(moment(moment(formState.offDate).format("DD-MM-YYYY"),"DD-MM-YYYY",true).isValid()==false && formState.offDate!=null && offHr!=null){
-            alert("Wrong Date Format!");
-            return;
+        // if(moment(moment(formState.offDate).format("DD-MM-YYYY"),"DD-MM-YYYY",true).isValid()==false && formState.offDate!=null && offHr!=null){
+        //     alert("Wrong Date Format!");
+        //     return;
+        // }
+        let momentDate="";
+        if(formState.offDate)
+        {
+            let dateStr="";
+            let dateArr=formState.offDate?.split("-");
+            if(dateArr[0]?.length!=2)
+            {
+                dateArr[0]="0"+dateArr[0];
+            }
+            if(dateArr[1]?.length!=2)
+            {
+                dateArr[1]="0"+dateArr[1];
+            }
+            dateStr=dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0];
+            momentDate=moment(dateStr);
+            if(!momentDate.isValid())
+            {
+                alert("Invalid Date!");
+                return;
+            }
         }
-        const user={
-            name:formState.name,
-            offDate:formState.offDate,
-            offSlot:offHr
-        };
+        
+        let user;
+        if(formState.name)
+        {
+            if(formState.offDate && offHr)
+            {
+                user={
+                    name:formState.name,
+                    offDate:momentDate.calendar().split("/").join("-"),
+                    offSlot:offHr
+                };
+            }
+            else
+            {
+                user={
+                    name:formState.name
+                };
+            }
+        }
+        else
+        {
+            user={
+                offDate:momentDate.calendar().split("/").join("-"),
+                offSlot:offHr
+            };
+        }
         console.log(user);
         axios.put(`http://localhost:8082/user/${userId}`,
         JSON.stringify(user),
@@ -97,8 +141,10 @@ const EditProfile=()=>{
             return err;
         })
     }
+    
     return(
         <>
+            
             <div className="container text-light">
             <h2 className="mt-5 mb-5">Update</h2>
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
@@ -107,10 +153,11 @@ const EditProfile=()=>{
             }
             <form>
                 <div className="form-group">
-                    <label className="text-light">Name</label>
-                    <input type="text" className="form-control" onChange={handleChage("name")} value={formState.name}/>
+                    <label className="text-light">Update Name</label>
+                    <input type="text" className="form-control" onChange={handleChage("name")} value={formState.name} placeholder="Updated Name"/>
                     
                 </div>
+                <div className="alert alert-warning font-weight-bold text-info">Provide your busy/pre-occupied/off hours below:</div>
                 <div className="m-2">
                     <label className="text-light m-1">Off Date</label>
                     <input type="text" placeholder="dd-mm-yyyy" width={"5vh"} className="m-2" onChange={handleChage("offDate")} value={formState.offDate}/>

@@ -1,10 +1,19 @@
 import React,{useEffect, useState} from "react";
 import { Redirect, useParams,Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Profile=()=>{
     let { userId } = useParams();
     const [profileState,setProfileState]=useState({});
     const [redirectToSignin,setRedirectToSignin]=useState(false);
+    const showToastMessage = () => {
+        toast.warning('Click on Edit Profile to mark your off hours and to update your Name.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(()=>{showToastMessage()},[]);
     useEffect(()=>{
         async function fetchUser(userId)
         {
@@ -68,6 +77,7 @@ const Profile=()=>{
     // }
     return(
         <>
+            <ToastContainer/>
             {/* {checkAuth()=="you" &&
                 <div className="container">
                     <h2 className="mt-5 mb-5">Profile</h2>
