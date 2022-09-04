@@ -48,7 +48,7 @@ const ScheduleAppointment=()=>{
         }
         dateStr=dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0];
         momentDate=moment(dateStr);
-        console.log("momentDate:",momentDate);
+        // console.log("momentDate:",momentDate);
         if(!momentDate.isValid())
         {
             alert("Invalid Date!");
@@ -73,9 +73,9 @@ const ScheduleAppointment=()=>{
         // "2022-09-30"
         // let finalTime=momentDate._i.split("-").reverse().join("-")+"T"+strH+":00:00.000Z";
         let finalTime=momentDate._i+"T"+strH+":00:00.000Z";
-        console.log("73 final time::",finalTime);
+        // console.log("73 final time::",finalTime);
         finalTime=moment(finalTime);
-        console.log("75 final time::",finalTime);
+        // console.log("75 final time::",finalTime);
         const appointment={
             title:formState.title,
             agenda:formState.agenda,
@@ -84,8 +84,8 @@ const ScheduleAppointment=()=>{
             // offDate:formState.offDate,
             // offSlot:offHr
         };
-        console.log(appointment);
-        axios.post(`http://localhost:8082/appointment/${user._id}`,
+        // console.log(appointment);
+        axios.post(`https://ganeshan-nbyula-appointments.herokuapp.com/appointment/${user._id}`,
         JSON.stringify(appointment),
         {
             headers:{
@@ -123,7 +123,7 @@ const ScheduleAppointment=()=>{
         })
     }
     useEffect(()=>{
-        axios.get("http://localhost:8082/user")
+        axios.get("https://ganeshan-nbyula-appointments.herokuapp.com/user")
         .then((res)=>{
             setAllUsers(res.data.users);
         })

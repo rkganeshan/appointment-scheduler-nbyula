@@ -24,7 +24,7 @@ const Profile=()=>{
             else
             {
                 // console.log("token from profile:",JSON.parse(localStorage.getItem("jwt")).token);
-                axios.get(`http://localhost:8082/user/${userId}`,
+                axios.get(`https://ganeshan-nbyula-appointments.herokuapp.com/user/${userId}`,
                 {
                     headers:{
                         "Accept":"application/json",

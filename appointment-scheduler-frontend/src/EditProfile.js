@@ -37,7 +37,7 @@ const EditProfile=()=>{
     //         else
     //         {
     //             // console.log("token from profile:",JSON.parse(localStorage.getItem("jwt")).token);
-    //             axios.put(`http://localhost:8082/user/${userId}`,
+    //             axios.put(`https://ganeshan-nbyula-appointments.herokuapp.com/user/${userId}`,
     //             {
     //                 headers:{
     //                     "Accept":"application/json",
@@ -112,8 +112,8 @@ const EditProfile=()=>{
                 offSlot:offHr
             };
         }
-        console.log(user);
-        axios.put(`http://localhost:8082/user/${userId}`,
+        // console.log(user);
+        axios.put(`https://ganeshan-nbyula-appointments.herokuapp.com/user/${userId}`,
         JSON.stringify(user),
         {
             headers:{
@@ -162,7 +162,7 @@ const EditProfile=()=>{
                     <label className="text-light m-1">Off Date</label>
                     <input type="text" placeholder="dd-mm-yyyy" width={"5vh"} className="m-2" onChange={handleChage("offDate")} value={formState.offDate}/>
                 </div>
-                <div class="btn-group">
+                <div className="btn-group">
                     <button type="button" className="btn dropdown-toggle mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {!offHr?"Off Hours":offHr}
                     </button>

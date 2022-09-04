@@ -11,9 +11,9 @@ const NavBar=()=>{
             localStorage.removeItem("jwt");
         }
         history.push("/signin");
-        return await axios.get("http://localhost:8082/auth/signout")
+        return await axios.get("https://ganeshan-nbyula-appointments.herokuapp.com/auth/signout")
         .then((response)=>{
-            console.log("signout",response);
+            // console.log("signout",response);
             // return response.json();
         })
         .catch(err=>console.log(err));

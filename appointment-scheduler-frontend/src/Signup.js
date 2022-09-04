@@ -28,8 +28,8 @@ const Signup=()=>{
             email:formState.email,
             password:formState.password
         };
-        console.log(user);
-        axios.post("http://localhost:8082/auth/signup",
+        // console.log(user);
+        axios.post("https://ganeshan-nbyula-appointments.herokuapp.com/auth/signup",
         JSON.stringify(user),
         {
             headers:{

@@ -36,8 +36,8 @@ const Signin=()=>{
             email:formState.email,
             password:formState.password
         };
-        console.log(user);
-        axios.post("http://localhost:8082/auth/signin",
+        // console.log(user);
+        axios.post("https://ganeshan-nbyula-appointments.herokuapp.com/auth/signin",
         JSON.stringify(user),
         {
             headers:{
@@ -62,7 +62,7 @@ const Signin=()=>{
             // res.data.user.__v="";
             if(typeof window !=="undefined")
             {
-                console.log("53 inside...");
+                // console.log("53 inside...");
                 localStorage.setItem("jwt",JSON.stringify(res.data))
                 setFormState(params=>({
                     ...params,
@@ -70,7 +70,7 @@ const Signin=()=>{
                 }))
                 // setFormState({...formState,redirectToReferer:true})
             }
-            console.log(res);
+            // console.log(res);
             setFormState(params=>({
                 ...params,
                 loading:false
